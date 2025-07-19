@@ -1,19 +1,8 @@
-# ✏️ Excali (working title)
+# ✏️ Excali 
 
 A virtual whiteboard app for sketching hand‑drawn style diagrams — inspired by [Excalidraw](https://github.com/excalidraw/excalidraw).  
 Build interactive, infinite canvas diagrams with real‑time collaboration.
 
-## 🚀 Features
-
-- 🖊️ Freehand drawing + basic shapes (rectangle, ellipse, line, arrow)
-- 🎨 Hand‑drawn visual style
-- 🌓 Dark mode support
-- 🔁 Undo/Redo stack
-- 📄 Export as PNG, SVG, JSON
-- 📥 Import from custom JSON
-- 🌐 Infinite canvas with panning and zooming
-- ⚡ Real-time collaboration (via WebSocket)
-- 🧠 Local‑first autosave
 
 *(Additional features coming soon: text support, shape libraries, E2EE, etc.)*
 
