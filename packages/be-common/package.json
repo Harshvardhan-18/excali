@@ -1,0 +1,21 @@
+{
+  "name": "@repo/be-common",
+  "version": "1.0.0",
+  "main": "index.js",
+  "exports": {
+    "./config": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    
+  }
+}
