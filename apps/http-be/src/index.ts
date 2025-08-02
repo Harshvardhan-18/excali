@@ -8,36 +8,51 @@ import {
   signInSchema,
 } from "@repo/common/types";
 import bcrypt from "bcrypt";
+import cors from "cors"
 import { prismaClient } from "@repo/db/client";
 
 const app = express();
+
+app.use(cors({
+  origin:"http://localhost:3000",
+  credentials: true
+}))
 
 app.use(express.json());
 
 app.post("/signin", async(req, res) => {
   const parsedData = signInSchema.safeParse(req.body);
   if (!parsedData.success) {
-    return res.json({
+    return res.status(403).json({
       message: "Incorrect inputs",
     });
   }
   const user=await prismaClient.user.findFirst({
     where:{
-      email:parsedData.data.username,
-      password:parsedData.data.password
+      email:parsedData.data.username
     }
   })
+
 
   if(!user){
     res.status(403).json({
       message:"Not authorized"
     })
   }
-  const token = jwt.sign({ userId:user?.id }, JWT_SECRET);
 
-  res.json({
-    token,
-  });
+  if(await bcrypt.compare(parsedData.data.password,user?.password as string)){
+      const token = jwt.sign({ userId:user?.id }, JWT_SECRET);
+      res.cookie("token",token,{
+        httpOnly:true,
+      });
+  }else{
+      res.json(403).json({
+        message:"Incorect password"
+      })
+  }
+
+
+  
 });
 app.post("/signup", async (req, res) => {
   const parsedData = createUserSchema.safeParse(req.body);
@@ -48,14 +63,17 @@ app.post("/signup", async (req, res) => {
   }
   try {
     const name=parsedData.data?.name;
+    const password=parsedData.data?.password;
+    const hashedPasword=await bcrypt.hash(password,10);
     await prismaClient.user.create({
       data: {
         email: parsedData.data?.username,
-        //hash the password
-        password: parsedData.data?.password,
+        password: hashedPasword,
         name: name,
       },
     });
+
+    
 
     res.json({
       message:`${name} is signed up!!`

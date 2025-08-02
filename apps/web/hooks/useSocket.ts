@@ -4,7 +4,7 @@ import { WEBSOCKET_URL } from "../app/config";
 export function useSocket(){
     const [loading,setLoading]=useState<boolean>(true);
     const [socket,setSocket]=useState<WebSocket>();
-    const token=
+    const token=localStorage.getItem("token")
 
     useEffect(()=>{
         const ws=new WebSocket(`${WEBSOCKET_URL}?token=${token}`);
