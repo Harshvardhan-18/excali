@@ -42,6 +42,9 @@ app.post("/signin", async(req, res) => {
 
   if(await bcrypt.compare(parsedData.data.password,user?.password as string)){
       const token = jwt.sign({ userId:user?.id }, JWT_SECRET);
+      res.send(
+        token
+      )
       res.cookie("token",token,{
         httpOnly:true,
       });

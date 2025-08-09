@@ -4,7 +4,7 @@ import { JWT_SECRET } from "@repo/be-common/config";
 
 
 export function middleware(req:Request,res:Response,next:NextFunction){
-    const token=req.headers.authorization ?? "";
+    const token=req.headers.cookie ?? "";
     const decoded=jwt.verify(token,JWT_SECRET);
     if(decoded){
         req.userId=(decoded as JwtPayload).userId;
